@@ -1,0 +1,22 @@
+{
+  "stac_version": "0.6.0",
+  "id": "wtss",
+  "version": "1.0.0",
+  "title": "WTSS Catalog",
+  "description": "",
+  "keywords": ["webservice", "timeseries", "dataset"],
+  "license": "LGPL",
+  "providers": [ ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "http://www.esensing.dpi.inpe.br/wtss/catalog.json"
+    },
+    { "rel": "root", "href": "catalog.json" },
+    {
+      "rel": "child",
+      "href": "operations/catalog.json",
+      "title": "WTSS Operations"
+    }
+  ]
+}
