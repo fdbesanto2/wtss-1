@@ -8,21 +8,57 @@
   "readOnly": true,
   "writeOnly": false,
   "required": [
-    "name"
+    "coverage",
+    "attributes",
+    "latitude",
+    "longitude",
+    "start_date",
+    "end_date"
   ],
   "properties": {
-    "name": {
-      "$id": "#/properties/name",
+    "coverage": {
+      "$id": "#/properties/coverage",
       "type": "string",
       "title": "Coverage Identifier",
       "description": "Coverage identifier",
       "default": "",
       "examples": [
         "MOD13Q1"
-      ],
-      "readOnly": true,
-      "writeOnly": false,
-      "pattern": "^(.*)$"
+      ]
+    },
+    "attributes": {
+      "$id": "#/properties/attributes",
+      "type": "string",
+      "title": "List of attributes",
+      "description": "List of attributes, delimited by comma, to retrieve time series",
+      "default": "",
+      "examples": [
+        "MOD13Q1"
+      ]
+    },
+    "latitude": {
+      "$id": "#/properties/latitude",
+      "type": "number",
+      "title": "Latitude coordinate",
+      "description": "Latitude coordinate"
+    },
+    "longitude": {
+      "$id": "#/properties/longitude",
+      "type": "number",
+      "title": "Longitude coordinate",
+      "description": "Longitude coordinate"
+    },
+    "start_date": {
+      "$id": "#/properties/start_date",
+      "type": "string",
+      "title": "Start date",
+      "description": "Start date"
+    },
+    "end_date": {
+      "$id": "#/properties/end_date",
+      "type": "string",
+      "title": "End date",
+      "description": "End date"
     }
   }
 }
