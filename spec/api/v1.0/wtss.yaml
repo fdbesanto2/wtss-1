@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+  description: >
+    Web Time Series Service is a lightweight web service for handling time series data from remote sensing imagery.
+    You can find out more about WTSS at [https://github.com/brazil-data-cube/wtss](https://github.com/brazil-data-cube/wtss)
+  version: "1.0"
+  title: Web Time Series Service
+  contact:
+    name: Example
+    email: example@example.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: 'http://www.esensing.dpi.inpe.br/wtss'
+    description: Production server
+  - url: 'http://www.dev.esensing.dpi.inpe.br/wtss'
+    description: Development server
+paths:
+  /list_coverages:
+    get:
+      summary: List Coverages
+      description: Retrieve list of available coverages
+      responses:
+        "200":
+          description: Array of coverages
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  coverages:
+                    type: array
+                    items:
+                      type: string
+
+  /describe_coverage:
+    get:
+      summary: Describe Coverage
+      description: Retrieves coverage description
+      responses:
+        "200":
+          description: Coverage found. 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoverageDescription"
+        "404":
+          description: Coverage not found
+      parameters:
+        - in: query
+          name: name
+          required: true
+          description: Identifier (name) of specific coverage
+          schema:
+            type: string
+
+  /time_series:
+    get:
+      summary: Time Series
+      description: >
+        Retrieves coverage timeseries. The property `result` contains keys
+        `attributes` with grouped values and `timeline` represents the affected times. The property `query` represents the same query attributes.
+      parameters:
+        - in: query
+          name: coverage
+          type: string
+          description: >
+            Identifier (name) of specific coverage
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: attributes
+          type: string
+          description: >
+            List of coverage attributes delimited by comma. i.e `attributes=ndvi,evi`
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: latitude
+          description: >
+            Latitude coordinate. i.e `latitude=-12`
+          required: true
+          schema:
+            type: number
+        - in: query
+          name: longitude
+          description: >
+            Longitude coordinate. i.e `longitude=-54`
+          schema:
+            type: number
+        - in: query
+          name: start_date
+          description: >
+            Start date. i.e `start_date=2015-01-01`
+          schema:
+            type: string
+        - in: query
+          name: end_date
+          description: End date. i.e `end_date=2017-12-31`
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoverageTimeSeries"
+components:
+  schemas:
+    CoverageTimeSeries:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  attribute:
+                    type: string
+                  values:
+                    type: array
+                    items:
+                      type: number
+            timeline:
+              type: array
+              items:
+                type: string
+            coordinates:
+              type: object
+              properties:
+                longitude:
+                  type: number
+                latitude:
+                  type: number
+                col:
+                  type: integer
+                row:
+                  type: integer
+        query:
+          type: object
+          properties:
+            coverage:
+              type: string
+            attributes:
+              type: array
+              items:
+                type: string
+            longitude:
+              type: number
+            latitude:
+              type: number
+            start_date:
+              type: string
+            end_date:
+              type: string
+    Dimension:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        min_idx:
+          type: number
+        max_idx:
+          type: number
+      xml:
+        name: Dimension
+    SpatialExtent:
+      type: object
+      properties:
+        xmin:
+          type: number
+        xmax:
+          type: number
+        ymin:
+          type: number
+        ymax:
+          type: number
+    SpatialResolution:
+      type: object
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+    CRS:
+      type: object
+      properties:
+        proj4:
+          type: string
+        wkt:
+          type: string
+    Attribute:
+      type: object
+      required:
+        - name
+        - datatype
+        - valid_range
+        - scale_factor
+        - missing_value
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        datatype:
+          type: string
+        valid_range:
+          type: object
+          properties:
+            min:
+              type: number
+            max:
+              type: number
+        scale_factor:
+          type: number
+        missing_value:
+          type: number
+    CoverageDescription:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        detail:
+          type: string
+        dimensions:
+          type: object
+          properties:
+            x:
+              $ref: "#/components/schemas/Dimension"
+            y:
+              $ref: "#/components/schemas/Dimension"
+            t:
+              $ref: "#/components/schemas/Dimension"
+        spatial_extent:
+          $ref: "#/components/schemas/SpatialExtent"
+        spatial_resolution:
+          $ref: "#/components/schemas/SpatialResolution"
+        crs:
+          $ref: "#/components/schemas/CRS"
+        timeline:
+          type: array
+          items:
+            type: string
+        attributes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attribute"
+      xml:
+        name: CoverageDescription
