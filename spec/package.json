@@ -1,7 +1,7 @@
 {
   "name": "wtss-spec",
   "version": "1.0.0",
-  "description": "Install python dependencies (`flask` and `flask-cors`) in order to serve local server with catalog.json:",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "build": "redoc-cli bundle api/v1.0/wtss.yaml --output dist/index.html"
