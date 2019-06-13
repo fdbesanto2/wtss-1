@@ -60,7 +60,7 @@ docker run --rm \
            --tty \
            --name redoccli \
            --volume $(pwd)/api/v1.0/wtss.yaml:/wtss.yaml \
-           --volume $(pwd)/doc:/dist redoc-cli bundle /wtss.yaml --output /dist/index.html
+           --volume $(pwd)/dist:/dist redoc-cli bundle /wtss.yaml --output /dist/index.html
 ```
 
 **Note** that the generated folder `dist` may have root permission. In order to fix it, use:
