@@ -5,8 +5,6 @@
   "type": "object",
   "title": "WTSS - ListCoverages operation",
   "description": "Retrieves list of offered coverages",
-  "readOnly": true,
-  "writeOnly": false,
   "required": [
     "coverages"
   ],
@@ -25,13 +23,8 @@
         "default": "",
         "examples": [
           "MOD13Q1"
-        ],
-        "readOnly": true,
-        "writeOnly": false,
-        "pattern": "^(.*)$"
-      },
-      "readOnly": true,
-      "writeOnly": false
+        ]
+      }
     }
   }
 }
