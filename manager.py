@@ -1,20 +1,9 @@
+from bdc_wtss import app
+from flask_script import Manager
 import os
 
-from flask_cors import CORS
-from flask_script import Manager
-
-from bdc_wtss import create_app
-from bdc_wtss.blueprint import blueprint
-from bdc_wtss.config import get_settings
-
-
-app = create_app(get_settings(os.environ.get('ENVIRONMENT', 'DevelopmentConfig')))
-app.register_blueprint(blueprint)
 
 manager = Manager(app)
-
-CORS(app, resorces={r'/d/*': {"origins": '*'}})
-
 
 @manager.command
 def run():
@@ -25,6 +14,13 @@ def run():
         port = 5000
 
     app.run(host, port)
+
+
+@manager.command
+def test():
+    import unittest
+    tests = unittest.TestLoader().discover('tests', pattern='**/test_*.py')
+    unittest.TextTestRunner(verbosity=1).run(tests)
 
 
 if __name__ == '__main__':
