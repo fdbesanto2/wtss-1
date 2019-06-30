@@ -1,4 +1,7 @@
+from bdc_wtss.config import get_settings
+from bdc_wtss.blueprint import blueprint
 from flask import Flask
+import os
 
 
 def create_app(config_name):
@@ -8,3 +11,7 @@ def create_app(config_name):
         app.config.from_object(config_name)
 
     return app
+
+app = create_app(get_settings(os.environ.get('ENVIRONMENT', 'DevelopmentConfig')))
+
+app.register_blueprint(blueprint)
