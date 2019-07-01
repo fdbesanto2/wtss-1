@@ -38,15 +38,17 @@
     },
     "latitude": {
       "$id": "#/properties/latitude",
-      "type": "number",
+      "type": "string",
       "title": "Latitude coordinate",
-      "description": "Latitude coordinate"
+      "description": "Latitude coordinate",
+      "pattern": "\\d"
     },
     "longitude": {
       "$id": "#/properties/longitude",
-      "type": "number",
+      "type": "string",
       "title": "Longitude coordinate",
-      "description": "Longitude coordinate"
+      "description": "Longitude coordinate",
+      "pattern": "\\d"
     },
     "start_date": {
       "$id": "#/properties/start_date",

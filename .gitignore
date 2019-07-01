@@ -1,2 +1,10 @@
+__pycache__
+.vscode
+.idea
+
 node_modules
 spec/dist
+
+env/
+venv/
+build/
