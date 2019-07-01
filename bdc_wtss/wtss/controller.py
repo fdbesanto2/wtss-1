@@ -1,12 +1,10 @@
 from bdc_wtss.wtss import ns
-from bdc_wtss.wtss.exceptions import CoverageNotFoundError
 from bdc_wtss.wtss.schemas import coverage_list, \
                                   coverage_list_response, \
                                   describe_coverage, \
                                   describe_coverage_response, \
                                   time_series
 from bdc_wtss.utils.helpers import requires_model, response_model, APIResource
-from flask import request
 
 
 api = ns
@@ -27,11 +25,11 @@ class DescribeCoverage(APIResource):
     @requires_model(describe_coverage)
     @response_model(describe_coverage_response)
     def get(self):
-        raise CoverageNotFoundError(request.args['name'])
+        return {}
 
 
 @api.route('/time_series')
 class TimeSeries(APIResource):
     @requires_model(time_series)
     def get(self):
-        raise CoverageNotFoundError(request.args['coverage'])
+        return {}

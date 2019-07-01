@@ -5,6 +5,7 @@ import os
 
 manager = Manager(app)
 
+
 @manager.command
 def run():
     host = os.environ.get('SERVER_HOST', '0.0.0.0')
@@ -14,13 +15,6 @@ def run():
         port = 5000
 
     app.run(host, port)
-
-
-@manager.command
-def test():
-    import unittest
-    tests = unittest.TestLoader().discover('tests', pattern='**/test_*.py')
-    unittest.TextTestRunner(verbosity=1).run(tests)
 
 
 if __name__ == '__main__':

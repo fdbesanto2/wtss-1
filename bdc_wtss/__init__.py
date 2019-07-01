@@ -1,6 +1,7 @@
-from bdc_wtss.config import get_settings
 from bdc_wtss.blueprint import blueprint
+from bdc_wtss.config import get_settings
 from flask import Flask
+from flask_cors import CORS
 import os
 
 
@@ -9,9 +10,11 @@ def create_app(config_name):
 
     with app.app_context():
         app.config.from_object(config_name)
+        app.register_blueprint(blueprint)
 
     return app
 
+
 app = create_app(get_settings(os.environ.get('ENVIRONMENT', 'DevelopmentConfig')))
 
-app.register_blueprint(blueprint)
+CORS(app, resorces={r'/d/*': {"origins": '*'}})
