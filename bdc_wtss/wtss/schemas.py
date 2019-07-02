@@ -10,8 +10,13 @@ schemas_folder = Path(BASE_DIR).parent / 'spec/json-schemas/v1.0/operations'
 def load_schema(file_name):
     """
     Open file and parses as JSON file
-    :param file_name:
-    :return:
+
+    Args:
+        file_name (str): File name of JSON Schema
+    Returns:
+        JSON schema parsed as Python object (dict)
+    Raises:
+        json.JSONDecodeError When file is not valid JSON object
     """
     schema_file = schemas_folder / file_name
 
