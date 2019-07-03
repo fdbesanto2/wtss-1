@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 # TODO: Get schemas by API Version
-schemas_folder = Path(BASE_DIR).parent / 'spec/json-schemas/v1.0/operations'
+schemas_folder = Path(BASE_DIR) / 'json-schemas/'
 
 
 def load_schema(file_name):

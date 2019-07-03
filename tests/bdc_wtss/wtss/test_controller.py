@@ -1,9 +1,10 @@
 from bdc_wtss import app as wtss_app
-from bdc_wtss.wtss.schemas import coverage_list_response, describe_coverage_response, time_series_response
-import unittest
-
+from bdc_wtss.schemas import coverage_list_response, \
+                             describe_coverage_response, \
+                             time_series_response
 from json import loads as json_loads
 from jsonschema import validate
+import unittest
 
 
 app = wtss_app.test_client()

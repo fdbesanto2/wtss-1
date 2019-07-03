@@ -1,13 +1,13 @@
-from bdc_wtss.wtss import ns
-from bdc_wtss.wtss.schemas import coverage_list, \
+from bdc_wtss.schemas import coverage_list, \
                                   coverage_list_response, \
                                   describe_coverage, \
                                   describe_coverage_response, \
                                   time_series
 from bdc_wtss.utils.helpers import requires_model, response_model, APIResource
+from flask_restplus import Namespace
 
 
-api = ns
+api = Namespace('wtss', description='status')
 
 
 @api.route('/list_coverages')
