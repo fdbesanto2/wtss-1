@@ -1,19 +1,9 @@
+from bdc_wtss import app
+from flask_script import Manager
 import os
 
-from flask_cors import CORS
-from flask_script import Manager
-
-from bdc_wtss import create_app
-from bdc_wtss.blueprint import blueprint
-from bdc_wtss.config import get_settings
-
-
-app = create_app(get_settings(os.environ.get('ENVIRONMENT', 'DevelopmentConfig')))
-app.register_blueprint(blueprint)
 
 manager = Manager(app)
-
-CORS(app, resorces={r'/d/*': {"origins": '*'}})
 
 
 @manager.command

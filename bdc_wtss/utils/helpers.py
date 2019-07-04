@@ -1,8 +1,8 @@
-from bdc_wtss.utils.exceptions import APIError, BadRequestError
 from flask import Response, json, request
 from flask_restplus import Resource, utils
 from functools import wraps
 from jsonschema import validate, SchemaError, ValidationError, draft7_format_checker
+from werkzeug.exceptions import BadRequest, HTTPException
 
 
 def return_response(data, status_code):
@@ -15,7 +15,7 @@ def return_response(data, status_code):
     Returns:
         A Flask Response
     """
-    data = json.dumps(data) if dumps else data
+    data = json.dumps(data)
     return Response(data, status_code, content_type='application/json')
 
 
@@ -53,7 +53,7 @@ def requires_model(schema):
             try:
                 validate(instance=request.args, schema=schema, format_checker=draft7_format_checker)
             except (SchemaError, ValidationError) as e:
-                raise BadRequestError(e.message)
+                raise BadRequest(e.message)
             return fn(*args, **kwargs)
         return decorated_function
     return decorator
@@ -72,8 +72,8 @@ class APIResource(Resource):
     def dispatch_request(self, *args, **kwargs):
         try:
             return super().dispatch_request(*args, **kwargs)
-        except APIError as e:
+        except HTTPException as e:
             return return_response({
                 "code": e.code,
-                "message": e.message
+                "message": e.description
             }, e.code)

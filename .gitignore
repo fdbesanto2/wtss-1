@@ -8,3 +8,7 @@ spec/dist
 env/
 venv/
 build/
+
+*,cover
+.coverage
+htmlcov/
