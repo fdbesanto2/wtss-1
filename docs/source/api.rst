@@ -13,12 +13,12 @@ bdc_wtss controller
 
 This is documentation of WTSS controller spec
 
-.. automodule:: bdc_wtss.wtss.controller
+.. automodule:: bdc_wtss.controller
    :members:
 
 bdc_wtss schemas
 ----------------
-.. automodule:: bdc_wtss.wtss.schemas
+.. automodule:: bdc_wtss.schemas
    :members:
 
 bdc_wtss utils
