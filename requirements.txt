@@ -6,3 +6,4 @@ Flask-Script==2.0.6
 jsonschema==3.0.1
 pytest==4.6.3
 pytest-cov==2.7.1
+Sphinx==2.1.2

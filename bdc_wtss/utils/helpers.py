@@ -5,15 +5,17 @@ from jsonschema import validate, SchemaError, ValidationError, draft7_format_che
 from werkzeug.exceptions import BadRequest, HTTPException
 
 
-def return_response(data, status_code, dumps=True):
+def return_response(data, status_code):
     """
     Utility to render Flask Resource as JSON content type.
-    :param data: Data to send
-    :param status_code: HTTP Status code
-    :param dumps: Flag to determines if data is already serialized
-    :return: Flask Response
+
+    Args:
+        data (dict, list): Object to Serialize as JSON
+        status_code (int): HTTP Status code
+    Returns:
+        A Flask Response
     """
-    data = json.dumps(data) if dumps else data
+    data = json.dumps(data)
     return Response(data, status_code, content_type='application/json')
 
 
@@ -21,16 +23,17 @@ def requires_model(schema):
     """
     Utility to require JSON schema object to validate request query arguments (request.args)
 
-    Throws BadRequestError when occurs validation error.
+    You can use it with APIResource in order to format BadRequestError output.
 
-    You can use it with APIResource in order to format BadRequestError output
+    Args:
+        schema (dict): JSON schema with Python Dictionaries.
+    Raises:
+        BadRequestError: When request arguments do not match with JSON schema.
+    Example:
 
-    example:
     >>> from bdc_wtss.utils.helpers import requires_model
     >>> from flask import request, Flask
-    >>>
     >>> app = Flask(__name__)
-    >>>
     >>> coverage_schema = {
     >>>     "type": "object",
     >>>     "properties": {"coverage": {"type": "string"}}
@@ -41,11 +44,8 @@ def requires_model(schema):
     >>>     '''Now its safe to get coverage name'''
     >>>     coverage_name = request.args['coverage']
     >>>     return 'Coverage "{}" provided'.format(coverage_name)
-    >>>
     >>> if __name__ == '__main__':
     >>>     app.run()
-
-    :param schema: JSON Schema object
     """
     def decorator(fn):
         @wraps(fn)
@@ -56,29 +56,6 @@ def requires_model(schema):
                 raise BadRequest(e.message)
             return fn(*args, **kwargs)
         return decorated_function
-    return decorator
-
-
-def response_model(schema):
-    """
-    Utility to require JSON Schema object on Flask Resource.
-    :param schema: JSON Schema object
-    :return: Formatted data according of JSON Schema
-    """
-    def decorator(fn):
-        @wraps(fn)
-        def decorated_function(*args, **kwargs):
-            res, code, headers = utils.unpack(fn(*args, **kwargs))
-
-            try:
-                validate(instance=res, schema=schema)
-            except (SchemaError, ValidationError) as e:
-                # TODO: Should warning into stdout or just cascade exception?
-                print('The response requires "{}" keys but got "{}"'.format(", ".join(schema["required"]), res))
-
-            return res
-        return decorated_function
-
     return decorator
 
 
