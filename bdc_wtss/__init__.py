@@ -1,20 +1,34 @@
-from bdc_wtss.blueprint import blueprint
-from bdc_wtss.config import get_settings
+"""Brazil Data Cube Web Time Series Series"""
+
+import os
 from flask import Flask
 from flask_cors import CORS
-import os
+from bdc_wtss.blueprint import blueprint
+from bdc_wtss.config import get_settings
 
 
 def create_app(config_name):
-    app = Flask(__name__)
+    """
+    Creates Brazil Data Cube WTSS application from config object
 
-    with app.app_context():
-        app.config.from_object(config_name)
-        app.register_blueprint(blueprint)
+    Args:
+        config_name (string|bdc_wtss.config.Config) Config instance
 
-    return app
+    Returns:
+        Flask Application with config instance scope
+
+    """
+
+    internal_app = Flask(__name__)
+
+    with internal_app.app_context():
+        internal_app.config.from_object(config_name)
+        internal_app.register_blueprint(blueprint)
+
+    return internal_app
 
 
-app = create_app(get_settings(os.environ.get('ENVIRONMENT', 'DevelopmentConfig')))
+app = create_app(
+    get_settings(os.environ.get('ENVIRONMENT', 'DevelopmentConfig')))
 
 CORS(app, resorces={r'/d/*': {"origins": '*'}})
