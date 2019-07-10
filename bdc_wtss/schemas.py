@@ -1,3 +1,20 @@
+"""
+This module WTSS Operations vocabularies. It is defined as `request` and `response` objects.
+
+Attributes:
+    coverage_list (dict): JSON Schema of WTSS list_coverages request
+
+    coverage_list_response (dict): JSON Schema of WTSS list_coverages response
+
+    describe_coverage (dict): JSON Schema of WTSS describe_coverage request operation
+
+    describe_coverage_response (dict): JSON Schema of WTSS describe_coverage response operation
+
+    time_series (dict): JSON Schema of WTSS time_series request operation
+
+    time_series_response (dict): JSON Schema of WTSS time_series response operation
+"""
+
 from bdc_wtss.config import BASE_DIR
 from json import loads as json_loads
 from pathlib import Path
