@@ -20,8 +20,3 @@ bdc_wtss schemas
 ----------------
 .. automodule:: bdc_wtss.schemas
    :members:
-
-bdc_wtss utils
---------------
-.. automodule:: bdc_wtss.utils.helpers
-   :members:
