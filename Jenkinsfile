@@ -29,7 +29,7 @@ def prepareEnvironment() {
 
 def codeCheck() {
     stage('code check') {
-        sh 'docker run --rm -i -v $(pwd):/data --name wtss_code_check ${tagName} pylint --exit-zero --output-format=parseable --reports=yes bdc_wtss/ > /data/pylint.log'
+        sh 'docker run --rm -i -v $(pwd):/data --name wtss_code_check ${tagName} bash -c "pylint --exit-zero --output-format=parseable --reports=yes bdc_wtss/ > /data/pylint.log"'
 
         recordIssues minimumSeverity: 'NORMAL',
             qualityGates: [
