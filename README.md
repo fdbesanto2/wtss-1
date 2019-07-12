@@ -19,12 +19,18 @@ pip install -r requirements.txt
 Run WTSS application with command:
 
 ```bash
-python manager.py run
+python manage.py run
 ```
 
 ## Tests
 
 In order to run tests, use the following command:
+
+```bash
+python manage.py test
+```
+
+or
 
 ```bash
 python -m pytest -v --cov-report html --cov-report annotate --cov=bdc_wtss tests/
@@ -47,6 +53,12 @@ Access the web browser the url: http://127.0.0.1:8000
 In order to generate WTSS documentation, go to directory `docs` and run `Makefile`:
 
 ```bash
+python manage.py docs
+```
+
+or
+
+```bash
 cd docs
 make html
 ```
@@ -56,7 +68,13 @@ After that, you can serve these HTML files with command:
 ```bash
 cd build/html
 # Python 3
-python -m http.server 8001
+python -m http.server 5001
 ```
 
-Open web browser http://127.0.0.1:8001
+You can also pass `--serve` flag to run local HTTP Server listening on 0.0.0.0:5001. The port can be changed with `--port=NewPort`
+
+```bash
+python manage.py docs --serve
+```
+
+Open web browser http://127.0.0.1:5001
