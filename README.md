@@ -78,3 +78,43 @@ python manage.py docs --serve
 ```
 
 Open web browser http://127.0.0.1:5001
+
+## Docker
+
+You can configure the environment to run through Docker containers. In order to do that, build the image `brazildatacube/wtss:0.1`:
+
+```bash
+docker build --tag brazildatacube/wtss:0.1 -f docker/Dockerfile .
+```
+
+After that, you can run the application with command:
+
+```bash
+docker run --interactive \
+           --tty \
+           --detach \
+           --name wtss_app \
+           --publish 5000:5000 \
+           brazildatacube/wtss:0.1
+```
+
+You can also generate the documentation on `http://localhost:5001`:
+
+```bash
+docker run --rm \
+           --interactive \
+           --name wtss_docs \
+           --publish 5001:5001 \
+           brazildatacube/wtss:0.1 \
+           python3 manage.py docs --serve
+```
+
+And run the tests:
+
+```bash
+docker run --rm \
+           --interactive \
+           --name wtss_docs \
+           brazildatacube/wtss:0.1 \
+           python3 manage.py test
+```
