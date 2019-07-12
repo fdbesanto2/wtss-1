@@ -48,5 +48,18 @@ def docs(serve=False, port=5001):
             test(HandlerClass=CGIHTTPRequestHandler, port=int(port), bind='')
 
 
+@manager.command
+def test():
+    """Run the unit tests."""
+    import pytest
+    pytest.main(["-v",
+        "--cov-report",
+        "html",
+        "--cov-report",
+        "annotate",
+        "--cov=bdc_wtss",
+        "-s",
+        "tests/"])
+
 if __name__ == '__main__':
     manager.run()
