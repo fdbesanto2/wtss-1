@@ -1,4 +1,4 @@
-FROM brazil-data-cube/geo:0.1
+FROM brazildatacube/geo:0.1
 
 ADD . /bdc-wtss
 
