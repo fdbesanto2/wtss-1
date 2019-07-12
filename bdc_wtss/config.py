@@ -1,3 +1,10 @@
+"""
+Brazil Data Cube Configuration
+
+You can define these configurations and call using environment variable
+`ENVIRONMENT`. For example: `export ENVIRONMENT=ProductionConfig`
+"""
+
 import os
 
 
@@ -5,6 +12,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 def get_settings(env):
+    """Retrieve Config class from environment"""
     return eval(env)
 
 

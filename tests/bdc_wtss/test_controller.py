@@ -1,3 +1,5 @@
+# pylint: disable-msg=C0103
+
 from bdc_wtss import app as wtss_app
 from bdc_wtss.schemas import coverage_list_response, \
                              describe_coverage_response, \

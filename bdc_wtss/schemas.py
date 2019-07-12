@@ -1,6 +1,24 @@
-from bdc_wtss.config import BASE_DIR
+"""
+This module WTSS Operations vocabularies.
+It is defined as `request` and `response` objects.
+
+Attributes:
+    coverage_list (dict): JSON Schema of ListCoverage request
+
+    coverage_list_response (dict): JSON Schema of ListCoverage response
+
+    describe_coverage (dict): JSON Schema of WTSS DescribeCoverage request
+
+    describe_coverage_response (dict): JSON Schema of DescribeCovereage response
+
+    time_series (dict): JSON Schema of WTSS TimeSeries request
+
+    time_series_response (dict): JSON Schema of TimeSeries response
+"""
+
 from json import loads as json_loads
 from pathlib import Path
+from bdc_wtss.config import BASE_DIR
 
 
 # TODO: Get schemas by API Version
