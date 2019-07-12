@@ -7,14 +7,14 @@ def checkoutProject() {
     stage('checkout') {
         checkout([
             $class: 'GitSCM',
-            branches: [[name: '${ghprbActualCommit}']],
+            branches: [[name: 'origin-pull/pull/${GITHUB_PR_NUMBER}/merge']],
             doGenerateSubmoduleConfigurations: false,
             extensions: [],
             gitTool: 'Default',
             submoduleCfg: [],
             userRemoteConfigs: [[
-                name: 'origin',
-                refspec: '+refs/pull/*:refs/remotes/origin/pr/*',
+                name: 'origin-pull',
+                refspec: '+refs/pull/${GITHUB_PR_NUMBER}/merge:refs/remotes/origin-pull/pull/${GITHUB_PR_NUMBER}/merge',
                 url: 'https://github.com/brazil-data-cube/wtss.git'
             ]]
         ])
@@ -67,20 +67,27 @@ def notifySlack(String buildStatus = 'STARTED', String mensagem = '') {
     buildStatus = buildStatus ?: 'SUCCESS'
 
     def color
+    def state
 
     if (buildStatus == 'STARTED') {
         color = '#D4DADF'
-        mensagem = mensagem ?: 'Iniciado'
+        mensagem = mensagem ?: 'Build starting'
+        state = 'PENDING'
     } else if (buildStatus == 'SUCCESS') {
         color = '#BDFFC3'
-        mensagem = mensagem ?: 'Finalizado'
+        mensagem = mensagem ?: 'Build successfully'
+        state = 'SUCCESS'
     } else if (buildStatus == 'UNSTABLE') {
         color = '#FFFE89'
-        mensagem = mensagem ?: 'Travado'
+        mensagem = mensagem ?: 'Build unstable'
+        state = 'SUCCESS'
     } else {
         color = '#FF9FA1'
-        mensagem = mensagem ?: 'Erro'
+        mensagem = mensagem ?: 'Build failed'
+        state = 'FAILED'
     }
+
+    setGitHubPullRequestStatus context: 'jenkins', message: mensagem, state: state
 
     def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}\n${mensagem}"
 
@@ -97,6 +104,8 @@ node("ubuntu-16.04"){
     try {
         checkoutProject()
         notifySlack()
+
+        setGitHubPullRequestStatus context: 'jenkins', message: 'Starting pipeline', state: 'PENDING'
 
         prepareEnvironment()
 
