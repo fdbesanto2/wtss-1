@@ -9,8 +9,8 @@ info:
     name: Example
     email: example@example.com
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
   - url: 'http://www.esensing.dpi.inpe.br/wtss'
     description: Production server
@@ -40,7 +40,7 @@ paths:
       description: Retrieves coverage description
       responses:
         "200":
-          description: Coverage found. 
+          description: Coverage found.
           content:
             application/json:
               schema:
