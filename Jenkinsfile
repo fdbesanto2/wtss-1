@@ -31,16 +31,18 @@ def codeCheck() {
     stage('code check') {
         sh 'docker run --rm -i -v $(pwd):/data --name wtss_code_check ${tagName} pylint --exit-zero --output-format=parseable --reports=yes bdc_wtss/ > /data/pylint.log'
 
-        recordIssues minimumSeverity: 'NORMAL',
-            qualityGates: [
-                [threshold: 1, type: 'DELTA_ERROR', unstable: false],
-                [threshold: 1, type: 'DELTA_HIGH', unstable: true],
-                [threshold: 1, type: 'DELTA_NORMAL', unstable: true],
-                [threshold: 1, type: 'NEW_HIGH', unstable: false],
-                [threshold: 1, type: 'TOTAL_HIGH', unstable: true],
-                [threshold: 1, type: 'TOTAL_ERROR', unstable: false]
-            ],
-            tools: [pyLint(pattern: 'pylint.log')]
+        recordIssues(tools: [pyLint(pattern: 'pylint.log')])
+
+        // recordIssues minimumSeverity: 'NORMAL',
+        //     qualityGates: [
+        //         [threshold: 1, type: 'DELTA_ERROR', unstable: false],
+        //         [threshold: 1, type: 'DELTA_HIGH', unstable: true],
+        //         [threshold: 1, type: 'DELTA_NORMAL', unstable: true],
+        //         [threshold: 1, type: 'NEW_HIGH', unstable: false],
+        //         [threshold: 1, type: 'TOTAL_HIGH', unstable: true],
+        //         [threshold: 1, type: 'TOTAL_ERROR', unstable: false]
+        //     ],
+        //     tools: [pyLint(pattern: 'pylint.log')]
     }
 }
 
