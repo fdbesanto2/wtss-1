@@ -21,7 +21,6 @@ from pathlib import Path
 from bdc_wtss.config import BASE_DIR
 
 
-# TODO: Get schemas by API Version
 schemas_folder = Path(BASE_DIR) / 'json-schemas/'
 
 
