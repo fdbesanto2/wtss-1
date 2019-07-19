@@ -53,6 +53,7 @@ class DescribeCoverage(APIResource):
         """
         Retrieves coverage metadata. These values can be spatio temporal limits,
         projection, attribute names and timeline.
+
         Returns:
             dict: Return Coverage Description
         """
@@ -62,7 +63,7 @@ class DescribeCoverage(APIResource):
 @api.route('/time_series')
 class TimeSeries(APIResource):
     """
-    WTSS DescribeCoverage Operation
+    WTSS TimeSeries Operation
 
     This method works only with GET operation. It will support
     POST method to retrieve time series of region of interest.
@@ -74,7 +75,8 @@ class TimeSeries(APIResource):
     @require_model(time_series)
     def get(self):
         """
-        time_series coverage
+        Retrieves coverage time series
+
         Returns:
             dict: Return coverage time series
         """
