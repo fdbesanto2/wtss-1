@@ -84,5 +84,6 @@ extensions.append("bdc_theme")
 
 html_theme_options = {
     # Set the name of the project to appear in the sidebar
-    "project_nav_name": "Name of the project",
+    "project_nav_name": project,
+    "github_project": "brazildatacube/wtss"
 }
